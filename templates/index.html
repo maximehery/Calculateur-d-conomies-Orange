@@ -1,0 +1,72 @@
+<html lang="fr">
+<head>
+    <title>Calcul des économies</title>
+    <!-- Copyright © 2014 Monotype Imaging Inc. All rights reserved -->
+    <link href="https://cdn.jsdelivr.net/npm/boosted@5.3.2/dist/css/orange-helvetica.min.css" rel="stylesheet"
+          integrity="sha384-A0Qk1uKfS1i83/YuU13i2nx5pk79PkIfNFOVzTcjCMPGKIDj9Lqx9lJmV7cdBVQZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/boosted@5.3.2/dist/css/boosted.min.css" rel="stylesheet"
+          integrity="sha384-fyenpx19UpfUhZ+SD9o9IdxeIJKE6upKx0B54OcXy1TqnO660Qw9xw6rOASP+eir" crossorigin="anonymous">
+</head>
+<body>
+<header role="banner">
+    <a id="top"></a>
+    <nav class="navbar supra navbar-expand-lg navbar-dark bg-dark" aria-label="Langues alternatives" role="navigation">
+        <div class="container">
+            <ul class="navbar-nav ms-auto me-5">
+                <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Français</a></li>
+            </ul>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Liens utiles" role="navigation">
+        <div class="container">
+            <div class="navbar-brand text-white">
+                <h1 class="title m-0">Calcul des <span class="text-primary">économies</span></h1>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="container my-5" role="main">
+    <form action="/calculer" method="post">
+        {% if economies > 0 %}
+            <div class="alert alert-info" role="alert">
+                <span class="alert-icon"><span class="visually-hidden">Information</span></span>
+                <div>
+                    <p>Les économies réalisées sont de <strong>{{ economies }}</strong> euros.</p>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="mb-3">
+            <label for="offre_actuelle" class="form-label fs-2">Choississez votre offre actuelle</label>
+            <select id="offre_actuelle" name="offre_actuelle" class="form-select form-select-lg mb-3"
+                    aria-label="Large select example">
+                {% for offer in offers %}
+                    <option value="{{ offer['price'] }}">{{ offer['name'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="offre_nouvelle" class="form-label fs-2">Choississez votre nouvelle offre</label>
+            <select id="offre_nouvelle" name="offre_nouvelle" class="form-select form-select-lg mb-3"
+                    aria-label="Large select example">
+                {% for offer in offers %}
+                    <option value="{{ offer['price'] }}">{{ offer['name'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Calculer</button>
+    </form>
+</main>
+<footer class="footer bg-dark navbar-dark">
+    <h2 class="visually-hidden">Sitemap & information</h2>
+    <div class="container-xxl footer-terms">
+        <ul class="navbar-nav gap-md-3">
+            <li class="fw-bold">© Orange 2023</li>
+        </ul>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/boosted@5.3.2/dist/js/boosted.bundle.min.js"
+        integrity="sha384-+lAXqnipqQpjxMdd/9Hp2GOzB4aIouKEYRZ7AE66h68BDob7UlMLpZY7w7SqrC+M"
+        crossorigin="anonymous"></script>
+</body>
+</html>
