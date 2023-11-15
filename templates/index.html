@@ -26,33 +26,31 @@
     </nav>
 </header>
 <main class="container my-5" role="main">
-    <form action="/calculer" method="post">
-        {% if economies > 0 %}
+    <form action="/" method="post">
+        {{ form.csrf_token }}
+
+        {% if economiesannuel > 0 and economiesmensuel > 0 %}
             <div class="alert alert-info" role="alert">
                 <span class="alert-icon"><span class="visually-hidden">Information</span></span>
                 <div>
-                    <p>Les économies réalisées sont de <strong>{{ economies }}</strong> euros.</p>
+                    <p>Vous économiserez <strong>{{ economiesannuel }}</strong> euros par an et
+                        <strong>{{ economiesmensuel }}</strong> par mois en passant à l'offre
+                        <strong>{{ form.offre_nouvelle }}</strong>.</p>
                 </div>
             </div>
         {% endif %}
 
         <div class="mb-3">
-            <label for="offre_actuelle" class="form-label fs-2">Choississez votre offre actuelle</label>
-            <select id="offre_actuelle" name="offre_actuelle" class="form-select form-select-lg mb-3"
-                    aria-label="Large select example">
-                {% for offer in offers %}
-                    <option value="{{ offer['price'] }}">{{ offer['name'] }}</option>
-                {% endfor %}
-            </select>
+            {{ form.offre_actuelle.label(class_="form-label fs-2") }}
+            {{ form.offre_actuelle(class_="form-select form-select-lg mb-3") }}
         </div>
         <div class="mb-3">
-            <label for="offre_nouvelle" class="form-label fs-2">Choississez votre nouvelle offre</label>
-            <select id="offre_nouvelle" name="offre_nouvelle" class="form-select form-select-lg mb-3"
-                    aria-label="Large select example">
-                {% for offer in offers %}
-                    <option value="{{ offer['price'] }}">{{ offer['name'] }}</option>
-                {% endfor %}
-            </select>
+            {{ form.offre_nouvelle.label(class_="form-label fs-2") }}
+            {{ form.offre_nouvelle(class_="form-select form-select-lg mb-3") }}
+        </div>
+        <div class="mb-3">
+            <label for="prix_forfait_mobile" class="form-label fs-2">Prix du forfait mobile</label>
+            <input type="text" class="form-control" id="prix_forfait_mobile" name="prix_forfait_mobile">
         </div>
         <button type="submit" class="btn btn-primary mt-2">Calculer</button>
     </form>
@@ -65,6 +63,22 @@
         </ul>
     </div>
 </footer>
+<script type="text/javascript">
+    function getOptionText(selectElement) {
+        // Récupère l'élément option sélectionné
+        const selectedOption = selectElement.querySelector("option:selected");
+
+        // Retourne le texte de l'option sélectionnée
+        return selectedOption ? selectedOption.textContent : "";
+    }
+
+    const select = document.getElementById("offre_nouvelle");
+    // Récupère l'index de l'option sélectionnée
+    const selectedOptionIndex = select.selectedIndex;
+    // Retourne le texte de l'option sélectionnée
+    const optionText = select.options[selectedOptionIndex].textContent;
+    document.getElementById('selectedOffer').innerText = optionText;
+</script>
 <script src="https://cdn.jsdelivr.net/npm/boosted@5.3.2/dist/js/boosted.bundle.min.js"
         integrity="sha384-+lAXqnipqQpjxMdd/9Hp2GOzB4aIouKEYRZ7AE66h68BDob7UlMLpZY7w7SqrC+M"
         crossorigin="anonymous"></script>
